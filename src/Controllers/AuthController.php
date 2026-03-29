@@ -164,7 +164,7 @@ class AuthController
                 $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 
-                $mail->setFrom('khemanthk28@gmail.com', 'Provenance Hub');
+                $mail->setFrom($email->Username, 'Provenance Hub');
                 $mail->addAddress($email);
                 $mail->isHTML(true);
                 $mail->Subject = 'Password Reset Code';
