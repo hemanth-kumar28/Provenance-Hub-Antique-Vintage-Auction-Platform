@@ -159,8 +159,8 @@ class AuthController
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'khemanthk28@gmail.com';
-                $mail->Password = 'ikvepuzikwvrthej';
+                $mail->Username = //A WORKING GMAIL ACCOUNT WITH 2FA ENABLED CAN BE USED
+                $mail->Password = //GENERATED PASSWORD FOR THAT ACCOUNT TO USE SMTP
                 $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 
