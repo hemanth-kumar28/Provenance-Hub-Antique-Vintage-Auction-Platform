@@ -1,0 +1,83 @@
+🗺️ Expanded Technical Architecture
+1. Frontend Engineering (Module 3: jQuery, JSON & AJAX)
+DOM Ready & Context:
+The entire application logic initializes only after the document structure is fully loaded.
+Contextual keywords are used within event handlers to reference the specific element triggering the action, ensuring scalability when multiple auction items exist.
+Advanced Selection & Traversal:
+Attribute Filtering: Elements are targeted based on data attributes rather than static IDs, allowing dynamic content to be manipulated easily.
+DOM Traversal: The script navigates up the DOM tree from a button to find its parent container, then searches within siblings to update specific price displays, ensuring the correct auction item is updated without reloading the page.
+Filtering: Lists of auctions are filtered client-side based on status (Active, Sold, Pending) using array-like filtering methods on jQuery objects.
+Event Management:
+Delegation: Events are bound to the main document body rather than individual buttons. This ensures that auction items loaded dynamically via AJAX still respond to clicks without re-binding events.
+Chaining: Multiple event types (mouse entry, mouse leave, click) are managed in a single configuration object for cleaner code.
+Visual Effects & Animation:
+Custom Queues: Animations are queued to ensure smooth transitions (e.g., fading out an old price before fading in the new one).
+Dynamic Styling: CSS properties are modified directly via script to provide immediate visual feedback (e.g., flashing red when outbid) without requiring a stylesheet change.
+Chain Reactions: Multiple effects are linked together (e.g., slide up a notification, wait, then slide down a success message) to guide user attention.
+Asynchronous Communication (AJAX):
+Serialization: Form data is automatically gathered into a query string format before transmission.
+JSON Exchange: Data is sent and received in JSON format. The client parses the response to update the UI, while the server sends structured status objects (success, error, message).
+Partial Loading: Specific sections of the page (like the header or auction grid) are refreshed independently by loading external HTML fragments into specific DOM containers.
+2. Backend Logic Core (Module 4: PHP Basics & Control Flow)
+Environment & Constants:
+Magic constants are used to dynamically reference the current file path and line number in error logs, aiding debugging.
+Global constants are defined for database credentials and site settings to prevent hardcoding values throughout the application.
+Type Safety & Casting:
+All incoming numeric data (bids, quantities) is explicitly cast to floating-point or integer types before calculation to prevent string concatenation errors.
+Debugging functions are used during development to inspect variable types and ensure data integrity.
+Advanced Operators:
+Spaceship Operator: Used in custom sorting algorithms to rank auctions by multiple criteria (price, then time) efficiently.
+Null Coalescing: Used to provide default values for optional query parameters (e.g., page numbers), preventing undefined index warnings.
+Ternary Logic: Used for concise conditional assignments, such as setting user status labels based on boolean flags.
+Array Manipulation:
+Associative arrays are used to map configuration keys to values.
+Multidimensional arrays store temporary datasets before database insertion.
+Built-in array functions verify the existence of keys, search for values, and transform data structures before rendering.
+Function Architecture:
+Functions are defined with default parameter values to allow flexible calling conventions.
+Anonymous functions are utilized for callback logic, such as custom sorting rules or data filtering routines.
+3. Advanced Backend & OOP (Module 5: Advanced PHP & OOP)
+Object-Oriented Design:
+Namespacing: All classes are grouped into logical namespaces (e.g., Core, Models, Traits) to prevent naming collisions and organize the codebase.
+Encapsulation: Properties are kept private or protected, accessed only through public getter and setter methods to enforce validation rules.
+Inheritance: Specialized classes (e.g., Premium Auctions) inherit base functionality from general classes (e.g., Standard Auctions), reducing code duplication.
+Abstraction: Abstract base classes define the required structure for controllers, ensuring all pages handle requests uniformly.
+Interfaces: Classes implement interfaces to guarantee they possess specific capabilities (e.g., the ability to be bid upon), allowing polymorphic behavior.
+Traits: Reusable code blocks (like Logging or Error Handling) are injected into multiple classes without requiring a linear inheritance chain.
+Static Members: Utility methods and database connections are managed via static properties to ensure a single instance exists throughout the request lifecycle.
+Type Checking: Objects are verified against their expected class types before processing to prevent runtime errors.
+State & Security:
+Session Management: Sessions are started securely, regenerated upon login to prevent fixation attacks, and destroyed upon logout.
+Cookie Persistence: Long-lived cookies are set with secure flags to remember user preferences or login states across browser sessions.
+Controlled File I/O:
+Audit Logging: A dedicated logging mechanism opens a text file in append mode. It writes timestamped entries for critical system events. This satisfies file handling requirements without using files for application data.
+Existence Checks: The system verifies file existence before attempting to write logs to prevent permission errors.
+Graphics Processing (GD Library):
+Resource Creation: True color images are created in memory to ensure high-quality processing.
+Transformation: Images are resized using resampling algorithms to maintain quality during thumbnail generation.
+Filtering: Visual filters (grayscale, contrast) are applied programmatically to indicate auction status (e.g., grayed out for sold items).
+Watermarking: Text or logo overlays are merged onto images to protect intellectual property.
+Memory Management: Image resources are explicitly destroyed after processing to free up server memory.
+4. Data Persistence (Module 6: PHP with MySQL)
+Connection Management:
+A dedicated database class manages the connection, ensuring credentials are not repeated across files.
+Connection errors are caught and handled gracefully without exposing sensitive details to the user.
+Transactional Integrity:
+Atomic Operations: Bidding processes are wrapped in database transactions. If a bid update fails, the entire operation rolls back to prevent inconsistent data (e.g., money deducted but bid not recorded).
+Locking: Row-level locking is utilized during high-frequency bidding to prevent two users from winning the same auction simultaneously.
+Query Security:
+Prepared Statements: All user inputs are bound to queries rather than concatenated, completely neutralizing SQL Injection risks.
+Parameter Binding: Data types are explicitly defined during binding to ensure the database interprets values correctly.
+Data Retrieval:
+Complex queries join multiple tables (Users, Auctions, Bids) to fetch comprehensive data in a single request.
+Results are fetched as associative arrays for easy integration with the frontend JSON structure.
+5. Security, Validation & Utilities (Modules 4, 5, 6)
+Input Validation:
+Filtering: Built-in filtering functions validate email formats and sanitize strings before they reach the database logic.
+Regular Expressions: Complex patterns validate artwork titles and descriptions to prevent invalid characters or potential script injection.
+Error Management:
+Custom Handlers: A global error handler captures PHP warnings and logs them to the secure audit file instead of displaying them to the user.
+Try-Catch Blocks: Critical operations (database connections, file writes) are wrapped in exception handling blocks to ensure the application fails gracefully.
+Time Management:
+Timezones: The application default timezone is set explicitly to ensure auction end times are consistent for all users.
+Timestamp Conversion: Human-readable dates are converted to Unix timestamps for mathematical calculations (e.g., time remaining) and back for display.
